@@ -4,7 +4,8 @@
     wideChat: false, forceSnow: false, hideSponsored: true, hideSimilarChannels: true,
     hideStories: false, confirmBeforeStory: true, secondsInTime: false, unroundCounters: false,
     showPeerId: true, noCopyRestrict: true, autoPause: true, blurPrivacy: false,
-    expTypingOff: false, expLocalPremiumLook: false, fontScale: 100, stickerScale: 100
+    blurText: false, hidePhones: false,
+    expTypingOff: false, expLocalPremiumLook: false, fontScale: 100, stickerScale: 100, stickerRadius: 12
   };
   const cur = await browser.storage.local.get(defaults);
   for (const [k, v] of Object.entries(Object.assign({}, defaults, cur))) {
@@ -16,12 +17,14 @@
       const val = el.type === "checkbox" ? el.checked : (el.type === "range" ? Number(el.value) : el.value);
       await browser.storage.local.set({ [k]: val });
       const lab = document.getElementById(k + "Val");
-      if (lab) lab.textContent = val + "%";
+      if (lab) lab.textContent = k === "stickerRadius" ? val + "px" : val + (el.type === "range" ? "%" : "");
     });
   }
   document.getElementById("avatarRadiusVal").textContent = (cur.avatarRadius ?? 50) + "%";
   document.getElementById("fontScaleVal").textContent = (cur.fontScale ?? 100) + "%";
   document.getElementById("stickerScaleVal").textContent = (cur.stickerScale ?? 100) + "%";
+  const sr = document.getElementById("stickerRadiusVal");
+  if (sr) sr.textContent = (cur.stickerRadius ?? 12) + "px";
   document.getElementById("exportBtn").onclick = async () => {
     const all = await browser.storage.local.get(null);
     document.getElementById("backupBox").value = JSON.stringify(all);

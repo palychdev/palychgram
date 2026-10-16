@@ -1,37 +1,58 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head><meta charset="utf-8"><title>PalychGram — настройки</title>
-<style>body{font:14px system-ui;max-width:640px;margin:24px;background:#0e1116;color:#e8eaf0}label{display:block;margin:8px 0}.warn{color:#ffb454}button{margin-top:8px}textarea{width:100%;height:80px}</style>
-</head>
+<link rel="stylesheet" href="options.css"></head>
 <body>
-<h1>PalychGram — настройки</h1>
-<h2>Внешний вид</h2>
-<label>Акцент <input type="color" id="accent" value="#7aa2ff"></label>
-<label>Плотность <select id="density"><option value="comfortable">Comfortable</option><option value="compact">Compact</option><option value="cozy">Cozy</option></select></label>
-<label>Стиль папок <select id="folderStyle"><option value="pills">Pills</option><option value="chips">Chips</option></select></label>
-<label>Скругление аватарок <input type="range" id="avatarRadius" min="0" max="50" value="50"> <span id="avatarRadiusVal">50%</span></label>
-<label>Размер шрифта <input type="range" id="fontScale" min="85" max="125" value="100"> <span id="fontScaleVal">100%</span></label>
-<label>Размер стикеров <input type="range" id="stickerScale" min="70" max="150" value="100"> <span id="stickerScaleVal">100%</span></label>
-<label><input type="checkbox" id="wideChat"> Широкий чат</label>
-<label><input type="checkbox" id="forceSnow"> Снег ❄</label>
-<h2>Контент</h2>
-<label><input type="checkbox" id="hideSponsored"> Скрывать рекламу</label>
-<label><input type="checkbox" id="hideSimilarChannels"> Скрыть «похожие каналы»</label>
-<label><input type="checkbox" id="hideStories"> Скрыть сторис-сайдбар</label>
-<label><input type="checkbox" id="confirmBeforeStory"> Подтверждение перед открытием сторис</label>
-<label><input type="checkbox" id="secondsInTime"> Время с секундами</label>
-<label><input type="checkbox" id="unroundCounters"> Не округлять счётчики (12.3K → 12345)</label>
-<label><input type="checkbox" id="showPeerId"> Бейдж ID чата в профиле</label>
-<label><input type="checkbox" id="noCopyRestrict"> Снимать запрет копирования (DOM)</label>
-<label><input type="checkbox" id="autoPause"> Пауза медиа при сворачивании вкладки</label>
-<label><input type="checkbox" id="blurPrivacy"> Blur-privacy (хоткей Alt+Shift+B)</label>
-<h2>Эксперименты</h2>
-<p class="warn">Могут сломаться при обновлении Telegram Web. Полного невидимого online при переписке не существует — сервер ставит online на любой write.</p>
-<label><input type="checkbox" id="expTypingOff"> Не отправлять «печатает…» (эксперимент)</label>
-<label><input type="checkbox" id="expLocalPremiumLook"> Локальный премиум-визуал (только себе)</label>
-<h2>Backup</h2>
-<p><button id="exportBtn">Экспорт настроек</button> <button id="importBtn">Импорт</button></p>
-<textarea id="backupBox" placeholder="JSON настроек"></textarea>
+<div class="wrap">
+<h1>PalychGram</h1>
+
+<div class="card">
+<h2>вид</h2>
+<label>акцент <input type="color" id="accent" value="#7aa2ff"></label>
+<label>плотность <select id="density"><option value="comfortable">обычная</option><option value="compact">компакт</option><option value="cozy">свободно</option></select></label>
+<label>папки <select id="folderStyle"><option value="pills">пилюли</option><option value="chips">чипсы</option></select></label>
+<label>аватарки <input type="range" id="avatarRadius" min="0" max="50" value="50"><span class="val" id="avatarRadiusVal">50%</span></label>
+<label>шрифт <input type="range" id="fontScale" min="85" max="125" value="100"><span class="val" id="fontScaleVal">100%</span></label>
+<label>стикеры: размер <input type="range" id="stickerScale" min="70" max="150" value="100"><span class="val" id="stickerScaleVal">100%</span></label>
+<label>стикеры: скругление <input type="range" id="stickerRadius" min="0" max="32" value="12"><span class="val" id="stickerRadiusVal">12</span></label>
+<label>широкий чат <input type="checkbox" id="wideChat"></label>
+<label>снег <input type="checkbox" id="forceSnow"></label>
+</div>
+
+<div class="card">
+<h2>чистка</h2>
+<label>без рекламы <input type="checkbox" id="hideSponsored"></label>
+<label>без похожих каналов <input type="checkbox" id="hideSimilarChannels"></label>
+<label>без сторис <input type="checkbox" id="hideStories"></label>
+<label>спрашивать перед сторис <input type="checkbox" id="confirmBeforeStory"></label>
+<label>время с секундами <input type="checkbox" id="secondsInTime"></label>
+<label>счётчики без округления <input type="checkbox" id="unroundCounters"></label>
+<label>бейдж id чата <input type="checkbox" id="showPeerId"></label>
+<label>снимать запрет копирования <input type="checkbox" id="noCopyRestrict"></label>
+<label>пауза медиа при сворачивании <input type="checkbox" id="autoPause"></label>
+</div>
+
+<div class="card">
+<h2>приватность</h2>
+<label>блюр <input type="checkbox" id="blurPrivacy"></label>
+<label>блюрить и текст сообщений <input type="checkbox" id="blurText"></label>
+<label>скрывать номера телефонов <input type="checkbox" id="hidePhones"></label>
+</div>
+
+<div class="card">
+<h2>эксперименты</h2>
+<p class="warn">может сломаться при обновлении вебки. невидимости при переписке не существует — сервер палит онлайн на любой отправке.</p>
+<label>не слать "печатает" <input type="checkbox" id="expTypingOff"></label>
+<label>премиум-визуал (только себе) <input type="checkbox" id="expLocalPremiumLook"></label>
+</div>
+
+<div class="card">
+<h2>бекап</h2>
+<div class="rowbtns"><button id="exportBtn">экспорт</button><button id="importBtn">импорт</button></div>
+<textarea id="backupBox" placeholder="json настроек"></textarea>
+</div>
+
+</div>
 <script src="options.js"></script>
 </body>
 </html>
