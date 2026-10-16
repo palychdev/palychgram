@@ -75,7 +75,7 @@
     fab.onclick = async () => {
       const items = await list(100);
       const body = items.length
-        ? items.map((i) => `<div style="border-bottom:1px solid #333;padding:6px 0"><small>${new Date(i.ts).toLocaleString()}</small><div>${escapeHtml(i.text)}</div></div>`).join("")
+        ? `<input id="pgdq" placeholder="поиск" style="width:100%;padding:6px;margin-bottom:8px;background:#222;color:#eee;border:1px solid #444" oninput="[...document.querySelectorAll('.pgd')].forEach(d=>d.style.display=d.innerText.toLowerCase().includes(this.value.toLowerCase())?'':'none')">` + items.map((i) => `<div class="pgd" style="border-bottom:1px solid #333;padding:6px 0"><small>${new Date(i.ts).toLocaleString()}</small><div>${escapeHtml(i.text)}</div></div>`).join("")
         : "<p>пусто. сюда попадут удалённые, которые успел увидеть.</p>";
       const w = window.open("", "_blank", "width=480,height=640");
       if (!w) return;
