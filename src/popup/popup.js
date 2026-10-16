@@ -31,4 +31,14 @@
   }
   document.getElementById("ver").textContent = browser.runtime.getManifest().version;
   document.getElementById("openOptions").onclick = () => browser.runtime.openOptionsPage();
+  try {
+    const tabs = await browser.tabs.query({ active: true, currentWindow: true });
+    if (tabs[0] && tabs[0].url.includes("web.telegram.org")) {
+      const st = await browser.tabs.sendMessage(tabs[0].id, { type: "pgStats" });
+      if (st) {
+        document.getElementById("statsBox").style.display = "";
+        document.getElementById("statsLine").textContent = `нод: ${st.seen} · ушло: ${st.gone} · ${st.min} мин`;
+      }
+    }
+  } catch (e) {}
 })();
