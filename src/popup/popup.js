@@ -2,7 +2,7 @@
   const ids = ["theme", "blurPrivacy", "wideChat", "hideSponsored", "hideStories", "confirmBeforeStory", "forceSnow"];
   const cur = await browser.storage.local.get({
     theme: "midnight", blurPrivacy: false, wideChat: false,
-    hideSponsored: true, hideStories: false, confirmBeforeStory: true, forceSnow: false,
+    hideSponsored: false, hideStories: false, confirmBeforeStory: true, forceSnow: false,
     accent: "#7aa2ff"
   });
   for (const id of ids) {
