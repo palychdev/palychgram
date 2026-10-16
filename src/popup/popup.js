@@ -1,8 +1,8 @@
 (async () => {
-  const ids = ["theme", "blurPrivacy", "wideChat", "hideSponsored", "hideStories", "confirmBeforeStory", "forceSnow"];
+  const ids = ["theme", "blurPrivacy", "wideChat", "hideSponsored", "hideStories", "confirmBeforeStory", "forceSnow", "noAnim"];
   const cur = await browser.storage.local.get({
     theme: "midnight", blurPrivacy: false, wideChat: false,
-    hideSponsored: false, hideStories: false, confirmBeforeStory: true, forceSnow: false,
+    hideSponsored: false, hideStories: false, confirmBeforeStory: true, forceSnow: false, noAnim: false,
     accent: "#7aa2ff"
   });
   for (const id of ids) {
