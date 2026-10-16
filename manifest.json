@@ -24,6 +24,8 @@
         "src/lib/ghost.js",
         "src/lib/time-format.js",
         "src/lib/peer-id.js",
+        "src/lib/snow.js",
+        "src/lib/auto-pause.js",
         "src/content/palychgram.js"
       ],
       "css": ["src/content/themes.css", "src/content/privacy-blur.css"],

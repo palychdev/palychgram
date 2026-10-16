@@ -17,6 +17,8 @@
     wideChat: false,
     noCopyRestrict: true,
     confirmBeforeStory: true,
+    forceSnow: false,
+    autoPause: true,
     expTypingOff: false,
     expLocalPremiumLook: false
   };
@@ -52,6 +54,8 @@
     if (window.PalychPremiumLocal) window.PalychPremiumLocal.apply(s);
     if (window.PalychTimeFormat) window.PalychTimeFormat.apply(s);
     if (window.PalychPeerId) window.PalychPeerId.apply(s);
+    if (window.PalychSnow) window.PalychSnow.apply(s);
+    if (window.PalychAutoPause) window.PalychAutoPause.apply(s);
   }
 
   function watchSponsored() {
@@ -70,8 +74,18 @@
     kill();
   }
 
-  function hookStoryConfirm() {
-    document.addEventListener(
+  function hookBlurHotkey() {
+    document.addEventListener("keydown", (ev) => {
+      if (ev.altKey && ev.shiftKey && (ev.key === "B" || ev.key === "И" || ev.key === "b")) {
+        const on = !document.documentElement.classList.contains("pg-blur-privacy");
+        document.documentElement.classList.toggle("pg-blur-privacy", on);
+        browser.storage.local.set({ blurPrivacy: on });
+        ev.preventDefault();
+      }
+    });
+  }
+
+  function hookStoryConfirm() {    document.addEventListener(
       "click",
       (ev) => {
         if (!document.documentElement.dataset.pgStoryConfirm) return;
@@ -93,6 +107,7 @@
     document.documentElement.dataset.pgStoryConfirm = s.confirmBeforeStory ? "1" : "";
     watchSponsored();
     hookStoryConfirm();
+    hookBlurHotkey();
     if (window.PalychDeletedCache) window.PalychDeletedCache.start();
     if (window.PalychTimeFormat) window.PalychTimeFormat.start();
     if (window.PalychPeerId) window.PalychPeerId.start();
