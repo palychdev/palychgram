@@ -29,7 +29,8 @@
     noBlur: false,
     dblCopy: true,
     customCss: "",
-    msgFont: "system"
+    msgFont: "system",
+    snippets: []
   };
 
   const THEMES = {
@@ -104,6 +105,7 @@
     if (window.PalychPeerId) window.PalychPeerId.apply(s);
     if (window.PalychSnow) window.PalychSnow.apply(s);
     if (window.PalychAutoPause) window.PalychAutoPause.apply(s);
+    if (window.PalychSnippets) window.PalychSnippets.apply(s);
   }
 
   function watchAds() {
