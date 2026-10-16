@@ -12,13 +12,14 @@
   },
   "permissions": ["storage", "contextMenus", "activeTab"],
   "background": {
-    "scripts": ["src/background/background.js"],
+    "scripts": ["src/lib/compat.js", "src/background/background.js"],
     "persistent": false
   },
   "content_scripts": [
     {
       "matches": ["*://web.telegram.org/*"],
       "js": [
+        "src/lib/compat.js",
         "src/lib/deleted-cache.js",
         "src/lib/premium-local.js",
         "src/lib/ghost.js",
