@@ -21,7 +21,10 @@
     expTypingOff: false,
     expLocalPremiumLook: false,
     fontScale: 100,
-    stickerScale: 100
+    stickerScale: 100,
+    stickerRadius: 12,
+    blurText: false,
+    hidePhones: false
   };
 
   async function loadSettings() {
@@ -39,6 +42,8 @@
     root.dataset.pgFolderStyle = s.folderStyle || "pills";
     root.dataset.pgPeerId = s.showPeerId ? "1" : "";
     root.classList.toggle("pg-blur-privacy", !!s.blurPrivacy);
+    root.classList.toggle("pg-blur-text", !!s.blurText);
+    root.classList.toggle("pg-hide-phones", !!s.hidePhones);
     root.classList.toggle("pg-wide-chat", !!s.wideChat);
     root.classList.toggle("pg-hide-sponsored", !!s.hideSponsored);
     root.classList.toggle("pg-hide-similar", !!s.hideSimilarChannels);
@@ -49,6 +54,7 @@
     root.style.setProperty("--pg-avatar-radius", (s.avatarRadius === 50 ? "50%" : s.avatarRadius + "%"));
     root.style.setProperty("--pg-font-scale", (s.fontScale || 100) / 100);
     root.style.setProperty("--pg-sticker-scale", (s.stickerScale || 100) / 100);
+    root.style.setProperty("--pg-sticker-radius", (s.stickerRadius ?? 12) + "px");
     if (window.PalychGhost) window.PalychGhost.apply(s);
     if (window.PalychPremiumLocal) window.PalychPremiumLocal.apply(s);
     if (window.PalychTimeFormat) window.PalychTimeFormat.apply(s);

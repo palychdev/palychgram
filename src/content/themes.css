@@ -61,4 +61,9 @@ div[class*="avatar" i] img {
 
 img[class*="sticker" i] {
   scale: var(--pg-sticker-scale, 1) !important;
+  border-radius: var(--pg-sticker-radius, 12px) !important;
+}
+
+.pg-hide-phones [class*="phone" i] {
+  display: none !important;
 }

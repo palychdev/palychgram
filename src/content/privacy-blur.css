@@ -8,3 +8,10 @@
 .pg-blur-privacy [class*="username" i] {
   filter: blur(6px) !important;
 }
+
+.pg-blur-text [class*="message" i] [class*="text" i] {
+  filter: blur(5px) !important;
+}
+.pg-blur-text [class*="message" i] [class*="text" i]:hover {
+  filter: none !important;
+}
