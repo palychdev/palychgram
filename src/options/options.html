@@ -15,6 +15,7 @@
 <label>шрифт <input type="range" id="fontScale" min="85" max="125" value="100"><span class="val" id="fontScaleVal">100%</span></label>
 <label>стикеры: размер <input type="range" id="stickerScale" min="70" max="150" value="100"><span class="val" id="stickerScaleVal">100%</span></label>
 <label>стикеры: скругление <input type="range" id="stickerRadius" min="0" max="32" value="12"><span class="val" id="stickerRadiusVal">12</span></label>
+<label>шрифт сообщений <select id="msgFont"><option value="system">системный</option><option value="serif">с засечками</option><option value="mono">моно</option></select></label>
 <label>широкий чат <input type="checkbox" id="wideChat"></label>
 <label>снег <input type="checkbox" id="forceSnow"></label>
 </div>
@@ -51,6 +52,11 @@
 <p class="warn">может сломаться при обновлении вебки. невидимости при переписке не существует — сервер палит онлайн на любой отправке.</p>
 <label>не слать "печатает" <input type="checkbox" id="expTypingOff"></label>
 <label>премиум-визуал (только себе) <input type="checkbox" id="expLocalPremiumLook"></label>
+</div>
+
+<div class="card">
+<h2>своё</h2>
+<label>css <textarea id="customCss" placeholder=".bubble { ... }"></textarea></label>
 </div>
 
 <div class="card">

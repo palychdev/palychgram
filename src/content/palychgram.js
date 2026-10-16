@@ -27,7 +27,9 @@
     hidePhones: false,
     noAnim: false,
     noBlur: false,
-    dblCopy: true
+    dblCopy: true,
+    customCss: "",
+    msgFont: "system"
   };
 
   const THEMES = {
@@ -39,8 +41,17 @@
     sunset: { bg: "#1a100c", bg2: "#241612", text: "#faeedd", text2: "#c4a894", borders: "#38241c", dark: true }
   };
 
-  function applyTheme(s) {
-    const t = THEMES[s.theme] || THEMES.midnight;
+  const FONTS = {
+    system: "system-ui, sans-serif",
+    serif: "Georgia, 'Times New Roman', serif",
+    mono: "ui-monospace, Consolas, monospace"
+  };
+    let key = s.theme;
+    if (key === "auto") {
+      const h = new Date().getHours();
+      key = (h >= 7 && h < 21) ? "snow" : "midnight";
+    }
+    const t = THEMES[key] || THEMES.midnight;
     const st = document.documentElement.style;
     st.setProperty("--color-background", t.bg);
     st.setProperty("--color-background-secondary", t.bg2);
@@ -79,10 +90,12 @@
     root.style.setProperty("--pg-font-scale", (s.fontScale || 100) / 100);
     root.style.setProperty("--pg-sticker-scale", (s.stickerScale || 100) / 100);
     root.style.setProperty("--pg-sticker-radius", (s.stickerRadius ?? 12) + "px");
+    root.style.setProperty("--pg-msg-font", FONTS[s.msgFont] || FONTS.system);
     root.classList.toggle("pg-no-anim", !!s.noAnim);
     root.classList.toggle("pg-no-blur", !!s.noBlur);
     root.dataset.pgDblCopy = s.dblCopy ? "1" : "";
     applyTheme(s);
+    applyCustomCss(s);
     if (window.PalychGhost) window.PalychGhost.apply(s);
     if (window.PalychPremiumLocal) window.PalychPremiumLocal.apply(s);
     if (window.PalychTimeFormat) window.PalychTimeFormat.apply(s);
@@ -121,6 +134,16 @@
         ev.preventDefault();
       }
     });
+  }
+
+  function applyCustomCss(s) {
+    let st = document.getElementById("pg-custom-css");
+    if (!st) {
+      st = document.createElement("style");
+      st.id = "pg-custom-css";
+      document.documentElement.appendChild(st);
+    }
+    if (st.textContent !== (s.customCss || "")) st.textContent = s.customCss || "";
   }
 
   function hookDblCopy() {

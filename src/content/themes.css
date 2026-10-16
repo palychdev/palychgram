@@ -29,6 +29,18 @@
 .pg-wide-chat {
   --pg-chat-max-width: 1100px;
 }
+.pg-wide-chat [class*="bubble" i] {
+  max-width: 1100px !important;
+}
+
+:root[data-pg-density="compact"] [class*="bubble" i] {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+:root[data-pg-density="cozy"] [class*="bubble" i] {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
 
 img[class*="avatar" i],
 div[class*="avatar" i] img {
@@ -57,6 +69,7 @@ div[class*="avatar" i] img {
 
 [class*="message" i] [class*="text" i] {
   font-size: calc(1em * var(--pg-font-scale, 1)) !important;
+  font-family: var(--pg-msg-font, inherit) !important;
 }
 
 img[class*="sticker" i] {

@@ -6,7 +6,7 @@
     showPeerId: true, noCopyRestrict: true, autoPause: true, blurPrivacy: false,
     blurText: false, hidePhones: false,
     expTypingOff: false, expLocalPremiumLook: false, fontScale: 100, stickerScale: 100, stickerRadius: 12,
-    noAnim: false, noBlur: false, dblCopy: true
+    noAnim: false, noBlur: false, dblCopy: true, customCss: "", msgFont: "system"
   };
   const cur = await browser.storage.local.get(defaults);
   for (const [k, v] of Object.entries(Object.assign({}, defaults, cur))) {
