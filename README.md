@@ -9,12 +9,13 @@
 
 ## как поставить
 
-1. `about:debugging#/runtime/this-firefox` → Load Temporary Add-on → `manifest.json`
-2. открыть `web.telegram.org/k` или `/z`
-3. настройки — по иконке в тулбаре или `about:addons` → Preferences
+firefox: `about:debugging#/runtime/this-firefox` → Load Temporary Add-on →
+`manifest.json` из корня. временное слетает при перезапуске, это нормально.
 
-временное дополнение слетает при перезапуске фаерфокса, это нормально.
-постоянная подпись — потом через AMO.
+chrome: `python build.py` → распаковать зип с рабочего стола →
+`chrome://extensions` → режим разработчика → «Загрузить распакованное
+расширение» → выбрать папку. исходный манифест хром не ест (ему нужен
+service worker), сборка правит это автоматом.
 
 ## что уже есть (0.3)
 

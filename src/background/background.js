@@ -1,5 +1,4 @@
-importScripts("../lib/compat.js");
-
+try { if (typeof importScripts === "function") importScripts("../lib/compat.js"); } catch (e) {}
 async function setup() {
   try { await browser.contextMenus.removeAll(); } catch (e) {}
   browser.contextMenus.create({

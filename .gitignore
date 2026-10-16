@@ -4,3 +4,4 @@ Thumbs.db
 web-ext-artifacts/
 *.zip
 node_modules/
+dist/
