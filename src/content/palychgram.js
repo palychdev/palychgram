@@ -46,6 +46,8 @@
     serif: "Georgia, 'Times New Roman', serif",
     mono: "ui-monospace, Consolas, monospace"
   };
+
+  function applyTheme(s) {
     let key = s.theme;
     if (key === "auto") {
       const h = new Date().getHours();
