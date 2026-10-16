@@ -1,22 +1,25 @@
-browser.contextMenus.create({
-  id: "pg-translate",
-  title: "перевести выделенное",
-  contexts: ["selection"]
-});
+importScripts("../lib/compat.js");
 
-browser.contextMenus.create({
-  id: "pg-copy-url",
-  title: "копировать ссылку чата",
-  contexts: ["page"],
-  documentUrlPatterns: ["*://web.telegram.org/*"]
-});
-
-browser.contextMenus.create({
-  id: "pg-copy-id",
-  title: "копировать ID чата из ссылки",
-  contexts: ["page"],
-  documentUrlPatterns: ["*://web.telegram.org/*"]
-});
+async function setup() {
+  try { await browser.contextMenus.removeAll(); } catch (e) {}
+  browser.contextMenus.create({
+    id: "pg-translate",
+    title: "перевести выделенное",
+    contexts: ["selection"]
+  });
+  browser.contextMenus.create({
+    id: "pg-copy-url",
+    title: "копировать ссылку чата",
+    contexts: ["page"],
+    documentUrlPatterns: ["*://web.telegram.org/*"]
+  });
+  browser.contextMenus.create({
+    id: "pg-copy-id",
+    title: "копировать ID чата из ссылки",
+    contexts: ["page"],
+    documentUrlPatterns: ["*://web.telegram.org/*"]
+  });
+}
 
 browser.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId === "pg-translate" && info.selectionText) {
@@ -31,3 +34,5 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
     try { await navigator.clipboard.writeText(m ? m[2] : tab.url); } catch (e) {}
   }
 });
+
+setup();
