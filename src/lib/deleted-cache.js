@@ -54,6 +54,19 @@
     return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 
+  function download() {
+    list(1000).then((items) => {
+      const blob = new Blob([JSON.stringify(items, null, 1)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "palychgram-deleted.json";
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    });
+  }
+    return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
   function ensurePanel() {
     if (document.getElementById("pg-deleted-fab")) return;
     const fab = document.createElement("button");
@@ -68,7 +81,7 @@
         : "<p>пусто. сюда попадут удалённые, которые успел увидеть.</p>";
       const w = window.open("", "_blank", "width=480,height=640");
       if (!w) return;
-      w.document.write(`<meta charset="utf-8"><title>удалённые</title><body style="font:13px system-ui;background:#111;color:#eee;padding:12px"><h2>удалённые (${items.length})</h2>${body}<p><button onclick="opener.PalychDeletedCache.clear().then(()=>location.reload())">очистить</button></p></body>`);
+      w.document.write(`<meta charset="utf-8"><title>удалённые</title><body style="font:13px system-ui;background:#111;color:#eee;padding:12px"><h2>удалённые (${items.length})</h2>${body}<p><button onclick="opener.PalychDeletedCache.clear().then(()=>location.reload())">очистить</button> <button onclick="opener.PalychDeletedCache.download()">скачать json</button></p></body>`);
     };
     document.body.appendChild(fab);
   }
@@ -89,5 +102,5 @@
     });
   }
 
-  window.PalychDeletedCache = { start, list, clear: clearAll };
+  window.PalychDeletedCache = { start, list, clear: clearAll, download };
 })();
