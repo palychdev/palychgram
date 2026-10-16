@@ -22,6 +22,8 @@
         "src/lib/deleted-cache.js",
         "src/lib/premium-local.js",
         "src/lib/ghost.js",
+        "src/lib/time-format.js",
+        "src/lib/peer-id.js",
         "src/content/palychgram.js"
       ],
       "css": ["src/content/themes.css", "src/content/privacy-blur.css"],

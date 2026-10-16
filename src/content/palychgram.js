@@ -10,6 +10,10 @@
     hideSponsored: true,
     hideSimilarChannels: true,
     secondsInTime: false,
+    unroundCounters: false,
+    showPeerId: true,
+    hideStories: false,
+    folderStyle: "pills",
     wideChat: false,
     noCopyRestrict: true,
     confirmBeforeStory: true,
@@ -30,10 +34,13 @@
     const root = document.documentElement;
     root.dataset.pgTheme = s.theme;
     root.dataset.pgDensity = s.density;
+    root.dataset.pgFolderStyle = s.folderStyle || "pills";
+    root.dataset.pgPeerId = s.showPeerId ? "1" : "";
     root.classList.toggle("pg-blur-privacy", !!s.blurPrivacy);
     root.classList.toggle("pg-wide-chat", !!s.wideChat);
     root.classList.toggle("pg-hide-sponsored", !!s.hideSponsored);
     root.classList.toggle("pg-hide-similar", !!s.hideSimilarChannels);
+    root.classList.toggle("pg-hide-stories", !!s.hideStories);
     root.classList.toggle("pg-seconds-time", !!s.secondsInTime);
     root.classList.toggle("pg-no-copy-restrict", !!s.noCopyRestrict);
     root.style.setProperty("--pg-accent", s.accent || "#7aa2ff");
@@ -43,6 +50,8 @@
     );
     if (window.PalychGhost) window.PalychGhost.apply(s);
     if (window.PalychPremiumLocal) window.PalychPremiumLocal.apply(s);
+    if (window.PalychTimeFormat) window.PalychTimeFormat.apply(s);
+    if (window.PalychPeerId) window.PalychPeerId.apply(s);
   }
 
   function watchSponsored() {
@@ -85,6 +94,8 @@
     watchSponsored();
     hookStoryConfirm();
     if (window.PalychDeletedCache) window.PalychDeletedCache.start();
+    if (window.PalychTimeFormat) window.PalychTimeFormat.start();
+    if (window.PalychPeerId) window.PalychPeerId.start();
     browser.storage.onChanged.addListener((changes) => {
       const next = {};
       for (const k of Object.keys(changes)) next[k] = changes[k].newValue;
