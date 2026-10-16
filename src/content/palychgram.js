@@ -172,6 +172,10 @@
   }
 
   (async () => {
+    if (/[?#&]pg=off\b/.test(location.hash + " " + location.search)) {
+      console.log("[pg] off");
+      return;
+    }
     const s = await loadSettings();
     applySettings(s);
     document.documentElement.dataset.pgStoryConfirm = s.confirmBeforeStory ? "1" : "";
