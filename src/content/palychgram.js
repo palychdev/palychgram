@@ -100,12 +100,14 @@
     const s = await loadSettings();
     applySettings(s);
     document.documentElement.dataset.pgStoryConfirm = s.confirmBeforeStory ? "1" : "";
-    watchSponsored();
-    hookStoryConfirm();
-    hookBlurHotkey();
-    if (window.PalychDeletedCache) window.PalychDeletedCache.start();
-    if (window.PalychTimeFormat) window.PalychTimeFormat.start();
-    if (window.PalychPeerId) window.PalychPeerId.start();
+    const safe = (fn) => { try { fn(); } catch (e) { console.warn("[pg]", e); } };
+    safe(watchSponsored);
+    safe(hookStoryConfirm);
+    safe(hookBlurHotkey);
+    safe(() => window.PalychDeletedCache && PalychDeletedCache.start());
+    safe(() => window.PalychTimeFormat && PalychTimeFormat.start());
+    safe(() => window.PalychPeerId && PalychPeerId.start());
+    console.log("[pg] on");
     browser.storage.onChanged.addListener(() => {
       loadSettings().then((full) => {
         applySettings(full);

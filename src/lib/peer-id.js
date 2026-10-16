@@ -19,9 +19,15 @@
     b.onclick = (e) => { e.stopPropagation(); try { navigator.clipboard.writeText(id); b.textContent = "ID ✓"; } catch (_) {} };
     anchor.appendChild(b);
   }
+  let started = false;
   function start() {
+    if (started) return;
+    if (!document.documentElement.dataset.pgPeerId) return;
+    started = true;
     setInterval(ensureBadge, 2500);
   }
-  function apply(s) {}
+  function apply(s) {
+    if (s.showPeerId && !started) start();
+  }
   window.PalychPeerId = { start, apply };
 })();

@@ -21,12 +21,18 @@
       document.querySelectorAll('[class*="counter" i]:not([data-pg-unrounded])').forEach(unround);
     }
   }
+  let started = false;
   function start() {
+    if (started) return;
+    if (!document.documentElement.classList.contains("pg-seconds-time") &&
+        document.documentElement.dataset.pgUnround !== "1") return;
+    started = true;
     new MutationObserver(tick).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
     setInterval(tick, 2000);
   }
   function apply(s) {
     document.documentElement.dataset.pgUnround = s.unroundCounters ? "1" : "";
+    if ((s.secondsInTime || s.unroundCounters) && !started) start();
     tick();
   }
   window.PalychTimeFormat = { start, apply };
