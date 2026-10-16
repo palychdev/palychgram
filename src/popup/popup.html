@@ -2,23 +2,48 @@
 <html lang="ru">
 <head><meta charset="utf-8"><link rel="stylesheet" href="popup.css"></head>
 <body>
-<h1>PalychGram</h1>
-<label>Тема <select id="theme">
-<option value="midnight">Midnight</option>
-<option value="amoled">AMOLED</option>
-<option value="snow">Snow</option>
-<option value="forest">Forest</option>
-<option value="grape">Grape</option>
-<option value="sunset">Sunset</option>
-</select></label>
-<div class="swatches" id="swatches"></div>
-<label><input type="checkbox" id="blurPrivacy"> Blur-privacy <small>(Alt+Shift+B)</small></label>
-<label><input type="checkbox" id="wideChat"> Широкий чат</label>
-<label><input type="checkbox" id="hideSponsored"> Скрыть рекламу</label>
-<label><input type="checkbox" id="hideStories"> Скрыть сторис-сайдбар</label>
-<label><input type="checkbox" id="confirmBeforeStory"> Подтверждение перед сторис</label>
-<label><input type="checkbox" id="forceSnow"> Снег ❄</label>
-<p class="hint">Полные настройки — в Options.</p>
+<header>
+  <div class="logo">PG</div>
+  <div>
+    <div class="name">PalychGram</div>
+    <div class="ver" id="ver">0.2.0</div>
+  </div>
+</header>
+
+<section>
+  <div class="cap">тема</div>
+  <select id="theme">
+    <option value="midnight">midnight</option>
+    <option value="amoled">amoled</option>
+    <option value="snow">snow</option>
+    <option value="forest">forest</option>
+    <option value="grape">grape</option>
+    <option value="sunset">sunset</option>
+  </select>
+  <div class="swatches" id="swatches"></div>
+</section>
+
+<section>
+  <div class="cap">вид</div>
+  <label class="row"><span>широкий чат</span><input type="checkbox" id="wideChat"></label>
+  <label class="row"><span>снег</span><input type="checkbox" id="forceSnow"></label>
+</section>
+
+<section>
+  <div class="cap">чистка</div>
+  <label class="row"><span>без рекламы</span><input type="checkbox" id="hideSponsored"></label>
+  <label class="row"><span>без сторис</span><input type="checkbox" id="hideStories"></label>
+  <label class="row"><span>спрашивать перед сторис</span><input type="checkbox" id="confirmBeforeStory"></label>
+</section>
+
+<section>
+  <div class="cap">приватность</div>
+  <label class="row"><span>блюр <small>alt+shift+b</small></span><input type="checkbox" id="blurPrivacy"></label>
+</section>
+
+<footer>
+  <button id="openOptions">все настройки</button>
+</footer>
 <script src="popup.js"></script>
 </body>
 </html>

@@ -29,4 +29,6 @@
     };
     box.appendChild(b);
   }
+  document.getElementById("ver").textContent = browser.runtime.getManifest().version;
+  document.getElementById("openOptions").onclick = () => browser.runtime.openOptionsPage();
 })();
