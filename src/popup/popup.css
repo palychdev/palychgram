@@ -1,4 +1,8 @@
-body { font: 13px system-ui; width: 230px; padding: 10px; background: #14161c; color: #e8eaf0; }
+body { font: 13px system-ui; width: 250px; padding: 10px; background: #14161c; color: #e8eaf0; }
 h1 { font-size: 15px; margin: 0 0 8px; }
 label { display: block; margin: 6px 0; }
+label small { opacity: .55; }
 .hint { opacity: .6; font-size: 12px; }
+.swatches { display: flex; gap: 6px; margin: 8px 0; }
+.sw { width: 24px; height: 24px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; padding: 0; }
+.sw.active { border-color: #fff; }
