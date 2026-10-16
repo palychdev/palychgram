@@ -1,5 +1,11 @@
 (async () => {
-  const defaults = { accent: "#7aa2ff", density: "comfortable", avatarRadius: 50, secondsInTime: false, hideSimilarChannels: true, noCopyRestrict: true, expTypingOff: false, expLocalPremiumLook: false };
+  const defaults = {
+    accent: "#7aa2ff", density: "comfortable", folderStyle: "pills", avatarRadius: 50,
+    wideChat: false, forceSnow: false, hideSponsored: true, hideSimilarChannels: true,
+    hideStories: false, confirmBeforeStory: true, secondsInTime: false, unroundCounters: false,
+    showPeerId: true, noCopyRestrict: true, autoPause: true, blurPrivacy: false,
+    expTypingOff: false, expLocalPremiumLook: false
+  };
   const cur = await browser.storage.local.get(defaults);
   for (const [k, v] of Object.entries(Object.assign({}, defaults, cur))) {
     const el = document.getElementById(k);
@@ -13,4 +19,15 @@
     });
   }
   document.getElementById("avatarRadiusVal").textContent = (cur.avatarRadius ?? 50) + "%";
+  document.getElementById("exportBtn").onclick = async () => {
+    const all = await browser.storage.local.get(null);
+    document.getElementById("backupBox").value = JSON.stringify(all);
+  };
+  document.getElementById("importBtn").onclick = async () => {
+    try {
+      const obj = JSON.parse(document.getElementById("backupBox").value);
+      await browser.storage.local.set(obj);
+      location.reload();
+    } catch (e) { alert("Невалидный JSON"); }
+  };
 })();
