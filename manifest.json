@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "PalychGram — visual mod for Telegram Web",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Темы, blur-privacy, твики удобства поверх web.telegram.org (WebK/WebZ). Только локально, без серверной магии.",
   "homepage_url": "https://web.telegram.org/",
   "browser_specific_settings": {
