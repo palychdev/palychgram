@@ -6,7 +6,7 @@
     density: "comfortable",
     avatarRadius: 50,
     blurPrivacy: false,
-    hideSponsored: true,
+    hideSponsored: false,
     hideSimilarChannels: true,
     hideStories: false,
     folderStyle: "pills",
@@ -24,8 +24,32 @@
     stickerScale: 100,
     stickerRadius: 12,
     blurText: false,
-    hidePhones: false
+    hidePhones: false,
+    noAnim: false,
+    noBlur: false,
+    dblCopy: true
   };
+
+  const THEMES = {
+    midnight: { bg: "#0e1116", bg2: "#171c24", text: "#e8eaf0", text2: "#9aa3b2", borders: "#242b36", dark: true },
+    amoled: { bg: "#000000", bg2: "#0a0a0a", text: "#f0f0f0", text2: "#9a9a9a", borders: "#1e1e1e", dark: true },
+    snow: { bg: "#f6f7fb", bg2: "#ffffff", text: "#14161c", text2: "#5b6472", borders: "#e2e6ee", dark: false },
+    forest: { bg: "#0d1512", bg2: "#131e19", text: "#e6f0e9", text2: "#93a89a", borders: "#223028", dark: true },
+    grape: { bg: "#150f1e", bg2: "#1e1530", text: "#efe8fa", text2: "#a89cc4", borders: "#2c2342", dark: true },
+    sunset: { bg: "#1a100c", bg2: "#241612", text: "#faeedd", text2: "#c4a894", borders: "#38241c", dark: true }
+  };
+
+  function applyTheme(s) {
+    const t = THEMES[s.theme] || THEMES.midnight;
+    const st = document.documentElement.style;
+    st.setProperty("--color-background", t.bg);
+    st.setProperty("--color-background-secondary", t.bg2);
+    st.setProperty("--color-text", t.text);
+    st.setProperty("--color-text-secondary", t.text2);
+    st.setProperty("--color-borders", t.borders);
+    st.setProperty("--color-primary", s.accent || "#7aa2ff");
+    document.documentElement.style.colorScheme = t.dark ? "dark" : "light";
+  }
 
   async function loadSettings() {
     try {
@@ -55,6 +79,10 @@
     root.style.setProperty("--pg-font-scale", (s.fontScale || 100) / 100);
     root.style.setProperty("--pg-sticker-scale", (s.stickerScale || 100) / 100);
     root.style.setProperty("--pg-sticker-radius", (s.stickerRadius ?? 12) + "px");
+    root.classList.toggle("pg-no-anim", !!s.noAnim);
+    root.classList.toggle("pg-no-blur", !!s.noBlur);
+    root.dataset.pgDblCopy = s.dblCopy ? "1" : "";
+    applyTheme(s);
     if (window.PalychGhost) window.PalychGhost.apply(s);
     if (window.PalychPremiumLocal) window.PalychPremiumLocal.apply(s);
     if (window.PalychTimeFormat) window.PalychTimeFormat.apply(s);
@@ -63,15 +91,25 @@
     if (window.PalychAutoPause) window.PalychAutoPause.apply(s);
   }
 
-  function watchSponsored() {
-    const kill = () => {
-      if (!document.documentElement.classList.contains("pg-hide-sponsored")) return;
-      document.querySelectorAll('[class*="sponsored"], [class*="Sponsored"]').forEach((el) => {
+  function watchAds() {
+    const hide = (root, sel) => {
+      root.querySelectorAll(sel).forEach((el) => {
+        if (el.children.length > 40) return;
+        if (el.querySelector("input, textarea, video")) return;
         el.style.display = "none";
       });
     };
-    new MutationObserver(kill).observe(document.documentElement, { childList: true, subtree: true });
-    kill();
+    const pass = () => {
+      const on = document.documentElement;
+      if (on.classList.contains("pg-hide-sponsored")) {
+        hide(document, '[class*="sponsor" i], [class*="promo" i]');
+      }
+      if (on.classList.contains("pg-hide-similar")) {
+        hide(document, '[class*="similar" i]');
+      }
+    };
+    setInterval(pass, 3000);
+    pass();
   }
 
   function hookBlurHotkey() {
@@ -82,6 +120,16 @@
         browser.storage.local.set({ blurPrivacy: on });
         ev.preventDefault();
       }
+    });
+  }
+
+  function hookDblCopy() {
+    document.addEventListener("dblclick", (ev) => {
+      if (!document.documentElement.dataset.pgDblCopy) return;
+      const m = ev.target.closest ? ev.target.closest('[class*="message" i]') : null;
+      if (!m) return;
+      const t = m.innerText ? m.innerText.trim() : "";
+      if (t) { try { navigator.clipboard.writeText(t); } catch (e) {} }
     });
   }
 
@@ -101,9 +149,10 @@
     applySettings(s);
     document.documentElement.dataset.pgStoryConfirm = s.confirmBeforeStory ? "1" : "";
     const safe = (fn) => { try { fn(); } catch (e) { console.warn("[pg]", e); } };
-    safe(watchSponsored);
+    safe(watchAds);
     safe(hookStoryConfirm);
     safe(hookBlurHotkey);
+    safe(hookDblCopy);
     safe(() => window.PalychDeletedCache && PalychDeletedCache.start());
     safe(() => window.PalychTimeFormat && PalychTimeFormat.start());
     safe(() => window.PalychPeerId && PalychPeerId.start());

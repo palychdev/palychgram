@@ -67,3 +67,14 @@ img[class*="sticker" i] {
 .pg-hide-phones [class*="phone" i] {
   display: none !important;
 }
+
+.pg-no-anim *,
+.pg-no-anim *::before,
+.pg-no-anim *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+.pg-no-blur * {
+  backdrop-filter: none !important;
+}
