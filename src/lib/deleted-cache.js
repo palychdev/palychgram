@@ -64,8 +64,6 @@
       setTimeout(() => URL.revokeObjectURL(a.href), 5000);
     });
   }
-    return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  }
 
   function ensurePanel() {
     if (document.getElementById("pg-deleted-fab")) return;
