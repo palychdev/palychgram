@@ -1,4 +1,3 @@
-/* Blur-privacy: честная замена «стример-мода» (в браузере нет API скрытия от захвата). */
 .pg-blur-privacy img[class*="avatar" i],
 .pg-blur-privacy div[class*="avatar" i] img {
   filter: blur(8px) !important;

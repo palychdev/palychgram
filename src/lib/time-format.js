@@ -1,4 +1,3 @@
-/* Время с секундами + неокруглённые счётчики (12.3K -> 12345). */
 (function () {
   "use strict";
   function unround(el) {
@@ -6,8 +5,7 @@
     const m = t.match(/^(\d+(?:[.,]\d+)?)\s*([KMB])$/i);
     if (!m) return;
     const mult = { K: 1e3, M: 1e6, B: 1e9 }[m[2].toUpperCase()];
-    const val = Math.round(parseFloat(m[1].replace(",", ".")) * mult);
-    el.textContent = String(val);
+    el.textContent = String(Math.round(parseFloat(m[1].replace(",", ".")) * mult));
     el.dataset.pgUnrounded = "1";
   }
   function tick() {

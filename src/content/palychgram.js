@@ -1,4 +1,3 @@
-/* PalychGram content entry: применяет настройки из storage.local, вешает observers. */
 (function () {
   "use strict";
   const DEFAULTS = {
@@ -9,24 +8,25 @@
     blurPrivacy: false,
     hideSponsored: true,
     hideSimilarChannels: true,
+    hideStories: false,
+    folderStyle: "pills",
     secondsInTime: false,
     unroundCounters: false,
     showPeerId: true,
-    hideStories: false,
-    folderStyle: "pills",
     wideChat: false,
     noCopyRestrict: true,
     confirmBeforeStory: true,
     forceSnow: false,
     autoPause: true,
     expTypingOff: false,
-    expLocalPremiumLook: false
+    expLocalPremiumLook: false,
+    fontScale: 100,
+    stickerScale: 100
   };
 
   async function loadSettings() {
     try {
-      const got = await browser.storage.local.get(DEFAULTS);
-      return Object.assign({}, DEFAULTS, got);
+      return Object.assign({}, DEFAULTS, await browser.storage.local.get(DEFAULTS));
     } catch (e) {
       return Object.assign({}, DEFAULTS);
     }
@@ -46,10 +46,9 @@
     root.classList.toggle("pg-seconds-time", !!s.secondsInTime);
     root.classList.toggle("pg-no-copy-restrict", !!s.noCopyRestrict);
     root.style.setProperty("--pg-accent", s.accent || "#7aa2ff");
-    root.style.setProperty(
-      "--pg-avatar-radius",
-      (s.avatarRadius === 50 ? "50%" : s.avatarRadius + "%")
-    );
+    root.style.setProperty("--pg-avatar-radius", (s.avatarRadius === 50 ? "50%" : s.avatarRadius + "%"));
+    root.style.setProperty("--pg-font-scale", (s.fontScale || 100) / 100);
+    root.style.setProperty("--pg-sticker-scale", (s.stickerScale || 100) / 100);
     if (window.PalychGhost) window.PalychGhost.apply(s);
     if (window.PalychPremiumLocal) window.PalychPremiumLocal.apply(s);
     if (window.PalychTimeFormat) window.PalychTimeFormat.apply(s);
@@ -61,16 +60,11 @@
   function watchSponsored() {
     const kill = () => {
       if (!document.documentElement.classList.contains("pg-hide-sponsored")) return;
-      document
-        .querySelectorAll('[class*="sponsored"], [class*="Sponsored"]')
-        .forEach((el) => {
-          el.style.display = "none";
-        });
+      document.querySelectorAll('[class*="sponsored"], [class*="Sponsored"]').forEach((el) => {
+        el.style.display = "none";
+      });
     };
-    new MutationObserver(kill).observe(document.documentElement, {
-      childList: true,
-      subtree: true
-    });
+    new MutationObserver(kill).observe(document.documentElement, { childList: true, subtree: true });
     kill();
   }
 
@@ -85,20 +79,15 @@
     });
   }
 
-  function hookStoryConfirm() {    document.addEventListener(
-      "click",
-      (ev) => {
-        if (!document.documentElement.dataset.pgStoryConfirm) return;
-        const t = ev.target.closest
-          ? ev.target.closest('[class*="story"], [class*="Story"]')
-          : null;
-        if (t && !confirm("Открыть сторис? (PalychGram: confirm-before-story)")) {
-          ev.preventDefault();
-          ev.stopPropagation();
-        }
-      },
-      true
-    );
+  function hookStoryConfirm() {
+    document.addEventListener("click", (ev) => {
+      if (!document.documentElement.dataset.pgStoryConfirm) return;
+      const t = ev.target.closest ? ev.target.closest('[class*="story"], [class*="Story"]') : null;
+      if (t && !confirm("Открыть сторис?")) {
+        ev.preventDefault();
+        ev.stopPropagation();
+      }
+    }, true);
   }
 
   (async () => {
@@ -111,9 +100,7 @@
     if (window.PalychDeletedCache) window.PalychDeletedCache.start();
     if (window.PalychTimeFormat) window.PalychTimeFormat.start();
     if (window.PalychPeerId) window.PalychPeerId.start();
-    browser.storage.onChanged.addListener((changes) => {
-      const next = {};
-      for (const k of Object.keys(changes)) next[k] = changes[k].newValue;
+    browser.storage.onChanged.addListener(() => {
       loadSettings().then((full) => {
         applySettings(full);
         document.documentElement.dataset.pgStoryConfirm = full.confirmBeforeStory ? "1" : "";

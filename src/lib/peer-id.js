@@ -1,4 +1,3 @@
-/* Peer ID в профиле: показывает ID чата + кнопку копирования. */
 (function () {
   "use strict";
   function peerIdFromUrl() {
@@ -15,7 +14,7 @@
     const b = document.createElement("button");
     b.id = "pg-peer-badge";
     b.textContent = "ID " + id;
-    b.title = "Нажми чтобы скопировать";
+    b.title = "нажми чтобы скопировать";
     b.style.cssText = "font-size:11px;opacity:.75;margin-left:8px;cursor:pointer";
     b.onclick = (e) => { e.stopPropagation(); try { navigator.clipboard.writeText(id); b.textContent = "ID ✓"; } catch (_) {} };
     anchor.appendChild(b);

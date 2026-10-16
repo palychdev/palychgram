@@ -1,4 +1,3 @@
-/* Снег как в ExteraGram: canvas-оверлей, ноль зависимостей. */
 (function () {
   "use strict";
   let canvas = null, raf = 0, flakes = [];
@@ -11,7 +10,6 @@
   function startFx() {
     stop();
     canvas = document.createElement("canvas");
-    canvas.id = "pg-snow";
     canvas.style.cssText = "position:fixed;inset:0;z-index:999998;pointer-events:none";
     document.body.appendChild(canvas);
     const ctx = canvas.getContext("2d");

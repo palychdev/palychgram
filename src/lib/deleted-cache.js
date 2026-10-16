@@ -1,4 +1,3 @@
-/* Журнал удалённых: кэширует увиденный текст в IndexedDB + панель просмотра. */
 (function () {
   "use strict";
   const DB = "palychgram";
@@ -51,27 +50,27 @@
     });
   }
 
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
   function ensurePanel() {
     if (document.getElementById("pg-deleted-fab")) return;
     const fab = document.createElement("button");
     fab.id = "pg-deleted-fab";
     fab.textContent = "🗑";
-    fab.title = "PalychGram: журнал удалённых";
+    fab.title = "журнал удалённых";
     fab.style.cssText = "position:fixed;right:16px;bottom:16px;z-index:999999;width:40px;height:40px;border-radius:50%;border:none;background:var(--pg-accent,#7aa2ff);cursor:pointer;font-size:18px";
     fab.onclick = async () => {
       const items = await list(100);
       const body = items.length
         ? items.map((i) => `<div style="border-bottom:1px solid #333;padding:6px 0"><small>${new Date(i.ts).toLocaleString()}</small><div>${escapeHtml(i.text)}</div></div>`).join("")
-        : "<p>Пусто. Сюда попадут удалённые сообщения, которые ты успел увидеть.</p>";
+        : "<p>пусто. сюда попадут удалённые, которые успел увидеть.</p>";
       const w = window.open("", "_blank", "width=480,height=640");
       if (!w) return;
-      w.document.write(`<meta charset="utf-8"><title>PalychGram — удалённые</title><body style="font:13px system-ui;background:#111;color:#eee;padding:12px"><h2>Удалённые (${items.length})</h2>${body}<p><button onclick="opener.PalychDeletedCache.clear().then(()=>location.reload())">Очистить</button></p></body>`);
+      w.document.write(`<meta charset="utf-8"><title>удалённые</title><body style="font:13px system-ui;background:#111;color:#eee;padding:12px"><h2>удалённые (${items.length})</h2>${body}<p><button onclick="opener.PalychDeletedCache.clear().then(()=>location.reload())">очистить</button></p></body>`);
     };
     document.body.appendChild(fab);
-  }
-
-  function escapeHtml(s) {
-    return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 
   function start() {
