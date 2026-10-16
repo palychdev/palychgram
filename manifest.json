@@ -26,6 +26,8 @@
         "src/lib/snow.js",
         "src/lib/auto-pause.js",
         "src/lib/snippets.js",
+        "src/lib/stats.js",
+        "src/lib/export-chat.js",
         "src/content/palychgram.js"
       ],
       "css": ["src/content/themes.css", "src/content/privacy-blur.css"],

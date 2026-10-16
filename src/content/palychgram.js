@@ -106,6 +106,7 @@
     if (window.PalychSnow) window.PalychSnow.apply(s);
     if (window.PalychAutoPause) window.PalychAutoPause.apply(s);
     if (window.PalychSnippets) window.PalychSnippets.apply(s);
+    if (window.PalychExport) window.PalychExport.apply(s);
   }
 
   function watchAds() {
@@ -188,6 +189,12 @@
     safe(() => window.PalychTimeFormat && PalychTimeFormat.start());
     safe(() => window.PalychPeerId && PalychPeerId.start());
     console.log("[pg] on");
+    try { if (window.PalychStats) window.PalychStats.start(); } catch (e) {}
+    try {
+      browser.runtime.onMessage.addListener((m) => {
+        if (m && m.type === "pgStats" && window.PalychStats) return Promise.resolve(window.PalychStats.get());
+      });
+    } catch (e) {}
     browser.storage.onChanged.addListener(() => {
       loadSettings().then((full) => {
         applySettings(full);
