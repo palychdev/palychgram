@@ -3,30 +3,30 @@
   --pg-accent: #7aa2ff;
   --pg-avatar-radius: 50%;
   --pg-chat-max-width: 780px;
-}
-
-:root[data-pg-theme="midnight"] {
   --pg-bg: #0e1116;
   --pg-fg: #e8eaf0;
-  --pg-accent-soft: color-mix(in srgb, var(--pg-accent) 25%, transparent);
+  --pg-bubble-out: color-mix(in srgb, var(--pg-accent) 30%, transparent);
 }
 
-:root[data-pg-theme="amoled"] {
-  --pg-bg: #000;
-  --pg-fg: #f0f0f0;
-}
+:root[data-pg-theme="midnight"] { --pg-bg: #0e1116; --pg-fg: #e8eaf0; }
+:root[data-pg-theme="amoled"] { --pg-bg: #000; --pg-fg: #f0f0f0; }
+:root[data-pg-theme="snow"] { --pg-bg: #f6f7fb; --pg-fg: #14161c; }
+:root[data-pg-theme="forest"] { --pg-bg: #0d1512; --pg-fg: #e6f0e9; }
+:root[data-pg-theme="grape"] { --pg-bg: #150f1e; --pg-fg: #efe8fa; }
+:root[data-pg-theme="sunset"] { --pg-bg: #1a100c; --pg-fg: #faeedd; }
 
-:root[data-pg-theme="snow"] {
-  --pg-bg: #f6f7fb;
-  --pg-fg: #14161c;
-}
+/* Плотность */
+:root[data-pg-density="compact"] { --pg-msg-pad: 4px; }
+:root[data-pg-density="comfortable"] { --pg-msg-pad: 8px; }
+:root[data-pg-density="cozy"] { --pg-msg-pad: 12px; }
 
-:root[data-pg-density="compact"] {
-  --pg-msg-pad: 4px;
+/* Стиль папок: pills/chips */
+:root[data-pg-folder-style="pills"] [class*="folder" i][class*="tab" i] {
+  border-radius: 999px !important;
 }
-
-:root[data-pg-density="comfortable"] {
-  --pg-msg-pad: 8px;
+:root[data-pg-folder-style="chips"] [class*="folder" i][class*="tab" i] {
+  border-radius: 8px !important;
+  border: 1px solid color-mix(in srgb, var(--pg-accent) 40%, transparent) !important;
 }
 
 /* Широкий чат */
@@ -40,11 +40,15 @@ div[class*="avatar" i] img {
   border-radius: var(--pg-avatar-radius) !important;
 }
 
-/* Скрытие sponsored и похожих каналов */
+/* Скрытие sponsored, похожих каналов, сторис-сайдбара */
 .pg-hide-sponsored [class*="sponsored" i] {
   display: none !important;
 }
 .pg-hide-similar [class*="similar" i] {
+  display: none !important;
+}
+.pg-hide-stories [class*="stories" i][class*="sidebar" i],
+.pg-hide-stories [class*="StorySidebar" i] {
   display: none !important;
 }
 
@@ -52,4 +56,9 @@ div[class*="avatar" i] img {
 .pg-no-copy-restrict * {
   user-select: text !important;
   -webkit-user-select: text !important;
+}
+
+/* Локальный премиум-визуал: золотая рамка своего аватара + звёздочка в заголовке */
+.pg-local-premium [class*="profile" i][class*="avatar" i] img {
+  outline: 2px solid var(--pg-accent) !important;
 }
