@@ -1,0 +1,4 @@
+body { font: 13px system-ui; width: 230px; padding: 10px; background: #14161c; color: #e8eaf0; }
+h1 { font-size: 15px; margin: 0 0 8px; }
+label { display: block; margin: 6px 0; }
+.hint { opacity: .6; font-size: 12px; }

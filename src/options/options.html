@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>PalychGram — настройки</title>
+<style>body{font:14px system-ui;max-width:640px;margin:24px;background:#0e1116;color:#e8eaf0}label{display:block;margin:8px 0}.warn{color:#ffb454}</style>
+</head>
+<body>
+<h1>PalychGram — настройки</h1>
+<label>Акцент <input type="color" id="accent" value="#7aa2ff"></label>
+<label>Плотность <select id="density"><option value="comfortable">Comfortable</option><option value="compact">Compact</option></select></label>
+<label>Скругление аватаров <input type="range" id="avatarRadius" min="0" max="50" value="50"> <span id="avatarRadiusVal">50%</span></label>
+<label><input type="checkbox" id="secondsInTime"> Время с секундами (переформат в DOM)</label>
+<label><input type="checkbox" id="hideSimilarChannels"> Скрыть «похожие каналы»</label>
+<label><input type="checkbox" id="noCopyRestrict"> Снимать запрет копирования (DOM)</label>
+<h2>Эксперименты</h2>
+<p class="warn">Могут сломаться при обновлении Telegram Web. Полного невидимого online при переписке не существует — сервер ставит online на любой write.</p>
+<label><input type="checkbox" id="expTypingOff"> Не отправлять «печатает…» (эксперимент)</label>
+<label><input type="checkbox" id="expLocalPremiumLook"> Локальный премиум-визуал (только себе)</label>
+<script src="options.js"></script>
+</body>
+</html>

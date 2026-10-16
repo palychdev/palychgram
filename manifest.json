@@ -1,0 +1,44 @@
+{
+  "manifest_version": 2,
+  "name": "PalychGram — visual mod for Telegram Web",
+  "version": "0.1.0",
+  "description": "Темы, blur-privacy, твики удобства поверх web.telegram.org (WebK/WebZ). Только локально, без серверной магии.",
+  "homepage_url": "https://web.telegram.org/",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "palychgram@example.local",
+      "strict_min_version": "109.0"
+    }
+  },
+  "permissions": ["storage", "contextMenus", "activeTab"],
+  "background": {
+    "scripts": ["src/background/background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://web.telegram.org/*"],
+      "js": [
+        "src/lib/deleted-cache.js",
+        "src/lib/premium-local.js",
+        "src/lib/ghost.js",
+        "src/content/palychgram.js"
+      ],
+      "css": ["src/content/themes.css", "src/content/privacy-blur.css"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "browser_action": {
+    "default_title": "PalychGram",
+    "default_popup": "src/popup/popup.html"
+  },
+  "options_ui": {
+    "page": "src/options/options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "48": "src/assets/icons/icon-48.png",
+    "96": "src/assets/icons/icon-96.png"
+  }
+}

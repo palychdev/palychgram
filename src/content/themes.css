@@ -1,0 +1,55 @@
+/* PalychGram темы: только CSS-переменные + классы, без смены структуры Telegram. */
+:root {
+  --pg-accent: #7aa2ff;
+  --pg-avatar-radius: 50%;
+  --pg-chat-max-width: 780px;
+}
+
+:root[data-pg-theme="midnight"] {
+  --pg-bg: #0e1116;
+  --pg-fg: #e8eaf0;
+  --pg-accent-soft: color-mix(in srgb, var(--pg-accent) 25%, transparent);
+}
+
+:root[data-pg-theme="amoled"] {
+  --pg-bg: #000;
+  --pg-fg: #f0f0f0;
+}
+
+:root[data-pg-theme="snow"] {
+  --pg-bg: #f6f7fb;
+  --pg-fg: #14161c;
+}
+
+:root[data-pg-density="compact"] {
+  --pg-msg-pad: 4px;
+}
+
+:root[data-pg-density="comfortable"] {
+  --pg-msg-pad: 8px;
+}
+
+/* Широкий чат */
+.pg-wide-chat {
+  --pg-chat-max-width: 1100px;
+}
+
+/* Скругление аватаров */
+img[class*="avatar" i],
+div[class*="avatar" i] img {
+  border-radius: var(--pg-avatar-radius) !important;
+}
+
+/* Скрытие sponsored и похожих каналов */
+.pg-hide-sponsored [class*="sponsored" i] {
+  display: none !important;
+}
+.pg-hide-similar [class*="similar" i] {
+  display: none !important;
+}
+
+/* Снятие copy-запретов в DOM */
+.pg-no-copy-restrict * {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
